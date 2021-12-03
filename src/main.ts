@@ -31,7 +31,7 @@ const STAGES_TO_SKIP = new Set([
 // Variables
 let mod: Mod | null = null;
 let currentStartSeedString: string | null = null;
-let restart = false;
+let restartOnNextFrame = false;
 let recordingStage = LevelStage.STAGE1_1;
 let recordingStageType = StageType.STAGETYPE_ORIGINAL;
 let floorsMap: FloorsMap = new LuaTable();
@@ -48,8 +48,8 @@ export function main(): void {
 
 // ModCallbacks.MC_POST_RENDER (2)
 function postRender() {
-  if (restart) {
-    restart = false;
+  if (restartOnNextFrame) {
+    restartOnNextFrame = false;
     Isaac.ExecuteCommand("restart");
   }
 }
@@ -97,7 +97,7 @@ function validateRun(continued: boolean) {
 
   if (!seeds.HasSeedEffect(SeedEffect.SEED_PREVENT_ALL_CURSES)) {
     seeds.AddSeedEffect(SeedEffect.SEED_PREVENT_ALL_CURSES);
-    restartOnNextFrame();
+    restartOnNextFrame = true;
     Isaac.DebugString("Disabling curses and restarting the run.");
     return false;
   }
@@ -217,7 +217,7 @@ function incrementStage() {
     recordingStage = LevelStage.STAGE1_1;
 
     recordAllFloorsToSeedMap();
-    restartOnNextFrame();
+    restartOnNextFrame = true;
     return true;
   }
 
@@ -252,8 +252,4 @@ function writeAllRecordedDataToSaveDatFile() {
   if (VERBOSE) {
     Isaac.DebugString('Recorded data to the "save#.dat" file.');
   }
-}
-
-function restartOnNextFrame() {
-  restart = true;
 }
