@@ -20,7 +20,7 @@ type SeedsMap = LuaTable<string, FloorsMap>;
 
 const MOD_NAME = "isaac-floor-recorder";
 const FINAL_STAGE = LevelStage.STAGE8;
-const VERBOSE = true;
+const VERBOSE = false;
 const NUMBER_OF_SEEDS_BEFORE_WRITING_TO_DISK = 100;
 
 const STAGES_TO_SKIP = new Set([
