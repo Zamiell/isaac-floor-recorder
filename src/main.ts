@@ -134,6 +134,7 @@ function recordFloor() {
     }
 
     roomsMap.set(tostring(roomDesc.SafeGridIndex), {
+      type: data.Type,
       shape: data.Shape,
       stageID: data.StageID,
       variant: data.Variant,
